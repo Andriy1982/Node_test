@@ -86,9 +86,32 @@ fs.readFile(pathNew,  (err, data) => {
 
       }
       
-      function removeContact(contactId) {
-        // ...твой код
+ async function removeContact(contactId) {
+      const data =  await fs.readFile(pathNew, 'utf8' ,  (err, data) => {
+        if (err) {
+          console.error(err)
+          return
+        }
+        return data
+  })
+  const parseData = JSON.parse(data)
+  await fs.mkdir('./temp1')
+  // if (!(await fs.access('./temp1'))) {
+  //   await fs.mkdir('./temp1')
+  // }
+
+  await fs.writeFile(
+    './temp1/path.json',
+    `${parseData}`,
+    (err) => {
+      if (err) {
+        console.log(err)
+        return
       }
+    },
+  )
+
+}
       
       function addContact(name, email, phone) {
         // ...твой код
@@ -97,3 +120,5 @@ fs.readFile(pathNew,  (err, data) => {
     //  listContacts()
     getContactById(9);
     //  .then(data =>console.table(data)); 
+
+    removeContact(1)
